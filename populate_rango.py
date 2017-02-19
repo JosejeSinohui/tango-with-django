@@ -34,7 +34,7 @@ def populate():
     ]
 
     other_pages = [
-        {"title": "Botle",
+        {"title": "Bottle",
          "url": "http://bottlepy.org/docs/dev/",
          "views": 10},
         {"title": "Flask",
