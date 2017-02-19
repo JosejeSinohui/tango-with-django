@@ -1,11 +1,9 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
 {% load staticfiles %}
-<html>
-    <head>
-        <title> About page </title>
-    </head>
-    <body>
-        <h1>This tutorial has been put together by Joseje Sinohui</h1>
-        <img src="{{ MEDIA_URL }}cat.gif"/>
-    </body>
-</html>
+{% block title_block %}
+    About page
+{% endblock %}
+{% block body_block %}
+   <h1>This tutorial has been put together by Joseje Sinohui</h1>
+   <img src="{{ MEDIA_URL }}cat.gif"/>
+{% endblock %}

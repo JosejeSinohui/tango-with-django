@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Rango</title>
-</head>
-<body>
+{% extends 'rango/base.html' %}
+{% block body_block %}
     <h1>Add a new Page to {{ category }}</h1>
     <div>
     {% if category %}
@@ -23,8 +18,5 @@
         {% else %}
         <strong>no such category!</strong>
     {% endif %}
-
     </div>
-
-</body>
-</html>
+{% endblock %}

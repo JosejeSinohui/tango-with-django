@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm
 
@@ -16,7 +15,9 @@ def index(request):
 
 
 def about(request):
-    return render(request, 'rango/about.html')
+    print(request.method)
+    print(request.user)
+    return render(request, 'rango/about.html', {})
 
 
 def show_category(request, category_name_slug):
