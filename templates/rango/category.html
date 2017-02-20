@@ -20,5 +20,7 @@
     {% else %}
         <strong> The specified category does not exist</strong>
     {% endif %}
-    <a href="{% url 'add_page' category.slug %}">Add a new page!</a> <br/>
+    {% if user.is_authenticated %}
+        <a href="{% url 'add_page' category.slug %}">Add a new page!</a> <br/>
+    {% endif %}
 {% endblock %}
