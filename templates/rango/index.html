@@ -2,7 +2,11 @@
 {% load staticfiles %}
 {% block body_block %}
     <h1>Rango says...</h1>
-    <div>hey there partner!</div>
+    {% if user.is_authenticated %}
+        howdy {{ user.username }}
+    {% else %}
+        hey ther partner!
+    {% endif %}
     <h2> Most liked categories </h2>
     <div>
         {% if categories %}
