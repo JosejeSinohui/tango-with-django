@@ -3,7 +3,7 @@
     <h1>Add a new Page to {{ category }}</h1>
     <div>
     {% if category %}
-        <form method="post", id="page_form", action="/rango/category/{{ category.slug}}/add_page/">
+        <form method="post", id="page_form", action="{% url 'add_page' category.slug %}">
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
