@@ -4,9 +4,26 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.datetime_safe import datetime
 
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+
+
+def visitor_cookie_handler(request, response):
+    visits = int(request.COOKIES.get('visits', '1'))
+
+    last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7],
+                                        '%Y-%m-%d %H:%M:%S')
+
+    if(datetime.now() - last_visit_time).seconds > 0:
+        visits += 1
+        response.set_cookie('last_visit', str(datetime.now()))
+    else:
+        response.set_cookie('last_visit', last_visit_cookie)
+
+    response.set_cookie('visits', visits)
 
 
 def index(request):
@@ -14,7 +31,10 @@ def index(request):
     page_list = Page.objects.order_by('-views')[:5]
     context_dict = {'categories': category_list,
                     'pages': page_list}
-    return render(request, 'rango/index.html', context_dict)
+    # request.session.set_test_cookie()
+    response = render(request, 'rango/index.html', context_dict)
+    visitor_cookie_handler(request, response)
+    return response
 
 
 # Create your views here.
@@ -23,6 +43,9 @@ def index(request):
 def about(request):
     print(request.method)
     print(request.user)
+    if request.session.test_cookie_worked():
+        print("test cookie worked")
+        request.session.delete_test_cookie()
     return render(request, 'rango/about.html', {})
 
 
