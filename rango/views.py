@@ -10,20 +10,29 @@ from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 
 
-def visitor_cookie_handler(request, response):
-    visits = int(request.COOKIES.get('visits', '1'))
+def get_server_side_cookie(request, cookie, default_val=None):
+    val = request.session.get(cookie)
+    if not val:
+        val = default_val
+    return val
 
-    last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
+
+def visitor_cookie_handler(request):
+    visits = int(get_server_side_cookie(request, 'visits', '1'))
+
+    last_visit_cookie = get_server_side_cookie(request,
+                                               'last_visit',
+                                               str(datetime.now()))
     last_visit_time = datetime.strptime(last_visit_cookie[:-7],
                                         '%Y-%m-%d %H:%M:%S')
 
-    if (datetime.now() - last_visit_time).days > 0:
+    if (datetime.now() - last_visit_time).seconds > 0:
         visits += 1
-        response.set_cookie('last_visit', str(datetime.now()))
+        request.session['last_visit'] = str(datetime.now())
     else:
-        response.set_cookie('last_visit', last_visit_cookie)
+        request.session['last_visit'] = last_visit_cookie
 
-    response.set_cookie('visits', visits)
+    request.session['visits'] = visits
 
 
 def index(request):
@@ -32,8 +41,10 @@ def index(request):
     context_dict = {'categories': category_list,
                     'pages': page_list}
     # request.session.set_test_cookie()
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+
     response = render(request, 'rango/index.html', context_dict)
-    visitor_cookie_handler(request, response)
     return response
 
 

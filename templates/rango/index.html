@@ -1,7 +1,7 @@
 {% extends 'rango/base.html' %}
 {% load staticfiles %}
 {% block body_block %}
-    <p>visits: {{ request.COOKIES.visits }}</p>
+    <p>visits: {{ visits }}</p>
     <h1>Rango says...</h1>
     {% if user.is_authenticated %}
         howdy {{ user.username }}
