@@ -17,7 +17,7 @@ def visitor_cookie_handler(request, response):
     last_visit_time = datetime.strptime(last_visit_cookie[:-7],
                                         '%Y-%m-%d %H:%M:%S')
 
-    if(datetime.now() - last_visit_time).seconds > 0:
+    if (datetime.now() - last_visit_time).days > 0:
         visits += 1
         response.set_cookie('last_visit', str(datetime.now()))
     else:
