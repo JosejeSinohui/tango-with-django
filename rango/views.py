@@ -145,7 +145,7 @@ def register(request):
     context_dict = {'user_form': user_form,
                     'profile_form': profile_form,
                     'registered': registered}
-    return render(request, 'rango/register.html', context_dict)
+    return render(request, 'rango/../templates/registration/register.html', context_dict)
 
 
 def user_login(request):
@@ -163,7 +163,7 @@ def user_login(request):
             print("Invalid login details: {0}, {1}".format(username, password))
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'rango/login.html', {})
+        return render(request, 'rango/../templates/registration/login.html', {})
 
 
 def user_logout(request):
