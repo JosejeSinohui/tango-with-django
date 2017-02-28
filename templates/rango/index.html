@@ -12,8 +12,8 @@
         {% if categories %}
             <ul>
                 {% for category in categories %}
-                   <li>
-                   <a href="{% url 'show_category' category.slug %}">{{ category.name }}</a> </li>
+                    <li>
+                        <a href="{% url 'show_category' category.slug %}">{{ category.name }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -25,9 +25,9 @@
         {% if pages %}
             <ul>
                 {% for page in pages %}
-                   <li>
-                   <a href="{{ page.url }}">{{ page.title }}</a>
-                   </li>
+                    <li>
+                        <a href="{{ page.url }}">{{ page.title }}</a>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}

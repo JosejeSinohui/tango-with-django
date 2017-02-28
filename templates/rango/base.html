@@ -3,38 +3,87 @@
 {% load rango_template_tags %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Rango -
-        {% block title_block %}
-            How to Tango with Django!
-        {% endblock %}
-    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
+    <title>Rango - {% block title %}How to Tango with Django! {% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
 </head>
+
 <body>
-<div>
-    {% block body_block %}
-    {% endblock %}
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse"
+            data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Rango</a>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_category' %}">Add a new Category</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'auth_password_change' %}">Change password</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'registration_register' %}">Register Here</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'auth_login' %}">Login</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+            {% block sidebar_block %}
+                {% get_category_list category %}
+            {% endblock %}
+        </nav>
+
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+            {% block body_block %}
+            {% endblock %}
+        </main>
+    </div>
 </div>
-<div>
-    {% block sidebar_block %}
-        {% get_category_list category %}
-    {% endblock %}
-</div>
-<hr/>
-<div>
-    <ul>
-        {% if user.is_authenticated %}
-            <li><a href="{% url 'restricted' %}">Top-Secret</a></li>
-            <li><a href="{% url 'auth_logout' %}?next=/rango/">Log out</a></li>
-            <li><a href="{% url 'auth_password_change' %}">Change password</a></li>
-            <li><a href="{% url 'add_category' %}">Add New Category</a></li>
-        {% else %}
-            <li><a href="{% url 'auth_login' %}">Log in</a></li>
-            <li><a href="{% url 'registration_register' %}">Sign Up</a></li>
-        {% endif %}
-        <li><a href="{% url 'about' %}">About</a></li>
-        <li><a href="{% url 'index' %}">Index</a></li>
-    </ul>
-</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="../../dist/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
