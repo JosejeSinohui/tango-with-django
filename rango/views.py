@@ -26,7 +26,7 @@ def visitor_cookie_handler(request):
     last_visit_time = datetime.strptime(last_visit_cookie[:-7],
                                         '%Y-%m-%d %H:%M:%S')
 
-    if (datetime.now() - last_visit_time).seconds > 0:
+    if (datetime.now() - last_visit_time).days > 0:
         visits += 1
         request.session['last_visit'] = str(datetime.now())
     else:
@@ -54,10 +54,10 @@ def index(request):
 def about(request):
     print(request.method)
     print(request.user)
-    if request.session.test_cookie_worked():
-        print("test cookie worked")
-        request.session.delete_test_cookie()
-    return render(request, 'rango/about.html', {})
+    # if request.session.test_cookie_worked():
+    #     print("test cookie worked")
+    #     request.session.delete_test_cookie()
+    return render(request, 'rango/about.html', {'visits': request.session['visits']})
 
 
 def show_category(request, category_name_slug):
