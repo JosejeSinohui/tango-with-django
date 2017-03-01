@@ -15,17 +15,12 @@ Including another URLconf
 """
 
 from django.conf import settings
-from django.conf.urls.static import static
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
+
 from rango import views
-from registration.backends.simple.views import RegistrationView
-
-
-class MyRegistrationView(RegistrationView):
-    def get_success_url(self, user):
-        return '/rango/'
-
+from rango.views import MyRegistrationView
 
 urlpatterns = [
                   url(r'^admin/', admin.site.urls),

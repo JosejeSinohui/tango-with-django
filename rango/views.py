@@ -5,9 +5,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.datetime_safe import datetime
+from registration.views import RegistrationView
 
-from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from rango.models import Category, Page
 
 
 def get_server_side_cookie(request, cookie, default_val=None):
@@ -174,3 +175,9 @@ def user_logout(request):
 @login_required
 def restricted(request):
     return render(request, 'rango/restricted.html', {})
+
+
+# class based view
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self, user):
+        return '/rango/'
