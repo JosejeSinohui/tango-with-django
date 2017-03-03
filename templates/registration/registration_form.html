@@ -1,9 +1,27 @@
 {% extends "rango/base.html" %}
+{% load bootstrap_toolkit %}
 {% block body_block %}
-    <h1>Register Here!</h1>
-    <form method="post" action=".">
+    <div class="jumbotron">
+        <h1>Register Here!</h1>
+    </div>
+    <form class="form-signin" role="form" method="post" action="."
+          id="login_form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit"/>
+
+        <label for="inputUsername">Username</label>
+        <input type="text" class="form-control" name="username"
+               placeholder="Username" id="id_username" autofocus required/>
+
+        <label for="inputEmail">Email</label>
+        <input type="email" class="form-control" name="username"
+               placeholder="Email" id="id_email" required/>
+
+        <label for="inputPassword">Password</label>
+        <input type="password" class="form-control" name="password"
+               id="id_password1" required/>
+
+        <label for="inputPassword2">Confirm Password</label>
+        <input type="password" class="form-control" name="password2"
+               id="id_password2" required/>
     </form>
 {% endblock %}
