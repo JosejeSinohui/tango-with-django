@@ -1,0 +1,13 @@
+{% extends 'rango/base.html' %}
+
+{% block title_block %}
+    Registration - Step 2
+{% endblock %}
+
+{% block body_block %}
+    <form method="post" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit"/>
+    </form>
+{% endblock %}
